@@ -135,18 +135,18 @@ def main(_argv):
 
 def update_database(found_classes):
     for found_class in found_classes:
-        taken = found_class[0] == 'T'
+        open = found_class[0] == 'O'
         spot_number = re.findall(r'\d+', found_class)[0]
         cached_availability = cache.get(spot_number)
 
-        if cached_availability != taken:
-            cache[spot_number] = taken
+        if cached_availability != open:
+            cache[spot_number] = open
 
             database.update_document(
                 database_id=Env.database_id,
                 collection_id=Env.collection_id,
                 document_id=f'spot{spot_number}',
-                data={'availability': taken},
+                data={'availability': open},
             )
 
 
