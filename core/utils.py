@@ -52,3 +52,16 @@ def draw_bbox(image, bboxes, show_label=True):
             cv2.putText(image, bbox_mess, (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                         font_scale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
     return image
+
+
+def detect_classes(data):
+    boxes, scores, classes, num_objects = data
+    class_names = read_class_names(cfg.YOLO.CLASSES)
+    found_classes = []
+
+    for i in range(num_objects[0]):
+        class_index = int(classes[0][i])
+        class_name = class_names[class_index]
+        found_classes.append(class_name)
+
+    return found_classes
