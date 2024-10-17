@@ -15,17 +15,13 @@ if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
-flags.DEFINE_string('weights', './checkpoints/yolov4-416',
-                    'path to weights file')
+flags.DEFINE_string('weights', './checkpoints/yolov4-416', 'path to weights file')
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
 flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
 flags.DEFINE_string('video', './data/road.mp4', 'path to input video')
 flags.DEFINE_float('iou', 0.45, 'iou threshold')
 flags.DEFINE_float('score', 0.25, 'score threshold')
-flags.DEFINE_string('output', None, 'path to output video')
-flags.DEFINE_string('output_format', 'XVID', 'codec used in VideoWriter when saving video to file')
-flags.DEFINE_boolean('dis_cv2_window', False, 'disable cv2 window during the process')  # this is good for the .ipynb
 flags.DEFINE_string('update', None, 'appwrite collection id')
 
 
@@ -48,14 +44,6 @@ def main(_argv):
     else:
         saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
         infer = saved_model_loaded.signatures['serving_default']
-
-    if FLAGS.output:
-        # by default VideoCapture returns float instead of int
-        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps = int(vid.get(cv2.CAP_PROP_FPS))
-        codec = cv2.VideoWriter_fourcc(*FLAGS.output_format)
-        out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
 
     if FLAGS.update:
         appwrite_utils.init_cache()
@@ -110,14 +98,10 @@ def main(_argv):
         print(info)
 
         result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        if not FLAGS.dis_cv2_window:
-            cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
-            cv2.imshow("result", result)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        if FLAGS.output:
-            out.write(result)
+        cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
+        cv2.imshow("result", result)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
         frame_id += 1
 
