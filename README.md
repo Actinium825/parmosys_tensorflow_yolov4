@@ -19,12 +19,11 @@
     project_id = '{your appwrite project id}'
     api_key = '{your appwrite secret api key}'
     database_id = '{database id where collection is found}'
-    collection_id = '{collection id under database to write documents into}'
    ```
    
    </details>
 10. Update `__C.YOLO.CLASSES` directory in `./core/config.py` from step 7
-11. Run `python detectvideo.py --weights ./checkpoints/{weights} --video ./data/{video}`
+11. Run `python detectvideo.py --weights ./checkpoints/{weights} --video ./data/{video} --update {collection id}`
 12. Press Q to exit
 
 ## Features
