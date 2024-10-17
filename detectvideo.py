@@ -26,7 +26,7 @@ flags.DEFINE_float('score', 0.25, 'score threshold')
 flags.DEFINE_string('output', None, 'path to output video')
 flags.DEFINE_string('output_format', 'XVID', 'codec used in VideoWriter when saving video to file')
 flags.DEFINE_boolean('dis_cv2_window', False, 'disable cv2 window during the process')  # this is good for the .ipynb
-flags.DEFINE_string(name='update', default=None, help='appwrite collection id')
+flags.DEFINE_string('update', None, 'appwrite collection id')
 
 
 def main(_argv):
