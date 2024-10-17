@@ -1,17 +1,14 @@
-import time
-import tensorflow as tf
 from absl import app, flags
 from absl.flags import FLAGS
-import core.utils as utils
+from core import appwrite_utils
 from core.yolov4 import filter_boxes
 from tensorflow.python.saved_model import tag_constants
+from tensorflow.compat.v1 import ConfigProto
+import core.utils as utils
+import time
+import tensorflow as tf
 import cv2
 import numpy as np
-from tensorflow.compat.v1 import ConfigProto
-from appwrite.client import Client
-from appwrite.services.databases import Databases
-import re
-from data.env import Env
 
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
@@ -29,15 +26,7 @@ flags.DEFINE_float('score', 0.25, 'score threshold')
 flags.DEFINE_string('output', None, 'path to output video')
 flags.DEFINE_string('output_format', 'XVID', 'codec used in VideoWriter when saving video to file')
 flags.DEFINE_boolean('dis_cv2_window', False, 'disable cv2 window during the process')  # this is good for the .ipynb
-
-client = Client()
-(client
- .set_endpoint(Env.endpoint)
- .set_project(Env.project_id)
- .set_key(Env.api_key)
- )
-database = Databases(client)
-cache = dict()
+flags.DEFINE_string(name='update', default=None, help='appwrite collection id')
 
 
 def main(_argv):
@@ -67,6 +56,9 @@ def main(_argv):
         fps = int(vid.get(cv2.CAP_PROP_FPS))
         codec = cv2.VideoWriter_fourcc(*FLAGS.output_format)
         out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
+
+    if FLAGS.update:
+        appwrite_utils.init_cache()
 
     frame_id = 0
     while True:
@@ -129,25 +121,9 @@ def main(_argv):
 
         frame_id += 1
 
-        found_classes = utils.detect_classes(pred_bbox)
-        update_database(found_classes)
-
-
-def update_database(found_classes):
-    for found_class in found_classes:
-        open = found_class[0] == 'O'
-        spot_number = re.findall(r'\d+', found_class)[0]
-        cached_availability = cache.get(spot_number)
-
-        if cached_availability != open:
-            cache[spot_number] = open
-
-            database.update_document(
-                database_id=Env.database_id,
-                collection_id=Env.collection_id,
-                document_id=f'spot{spot_number}',
-                data={'availability': open},
-            )
+        if FLAGS.update:
+            found_classes = utils.detect_classes(pred_bbox)
+            appwrite_utils.update_database(found_classes)
 
 
 if __name__ == '__main__':
