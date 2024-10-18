@@ -16,7 +16,7 @@ client = Client()
  )
 database = Databases(client)
 cache = dict()
-attribute_key = 'attribute'
+attribute_key = 'availability'
 
 
 def init_cache():
@@ -41,9 +41,6 @@ def init_cache():
 
 
 def update_database(found_classes):
-    functions = []
-    threads = []
-
     for found_class in found_classes:
         is_open = found_class[0] == 'O'
         spot_number = re.findall(r'\d+', found_class)[0]
@@ -52,29 +49,18 @@ def update_database(found_classes):
         if cached_availability != is_open:
             cache[spot_number] = is_open
 
-            def update():
-                try:
-                    database.update_document(
-                        database_id=Env.database_id,
-                        collection_id=FLAGS.update,
-                        document_id=f'spot{spot_number}',
-                        data={attribute_key: is_open},
-                    )
+            try:
+                database.update_document(
+                    database_id=Env.database_id,
+                    collection_id=FLAGS.update,
+                    document_id=f'spot{spot_number}',
+                    data={attribute_key: is_open},
+                )
 
-                except AppwriteException:
-                    database.create_document(
-                        database_id=Env.database_id,
-                        collection_id=FLAGS.update,
-                        document_id=f'spot{spot_number}',
-                        data={attribute_key: is_open},
-                    )
-
-            functions.append(update)
-
-    for function in functions:
-        thread = threading.Thread(target=function)
-        threads.append(thread)
-        thread.start()
-
-    for thread in threads:
-        thread.join()
+            except AppwriteException:
+                database.create_document(
+                    database_id=Env.database_id,
+                    collection_id=FLAGS.update,
+                    document_id=f'spot{spot_number}',
+                    data={attribute_key: is_open},
+                )
