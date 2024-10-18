@@ -1,5 +1,4 @@
 import re
-import threading
 from appwrite.exception import AppwriteException
 from core.config import cfg
 from core import utils
