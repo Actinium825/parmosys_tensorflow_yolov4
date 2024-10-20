@@ -9,7 +9,7 @@
 6. Place your weights folder in `./checkpoints/{weights}`
 7. Place your `.names` file in `./data/classes/{names}`
 8. Place your video for detection in `./data/{video}`
-9. Add `env.py` to `./data/env.py`
+9. If using Appwrite, add `env.py` to `./data/env.py`
    <details>
    <summary>env.py</summary>
 
@@ -22,14 +22,15 @@
    ```
    
    </details>
-10. Update `__C.YOLO.CLASSES` directory in `./core/config.py` from step 7
-11. Run `python detectvideo.py --weights ./checkpoints/{weights} --video ./data/{video} --update {collection id}`
-12. Press Q to exit
+10. If using Firebase, add `admin_key.json` to `./data/{admin_key.json}`   
+11. Update `__C.YOLO.CLASSES` directory in `./core/config.py` from step 7
+12. Run `python detectvideo.py --weights ./checkpoints/{weights} --video ./data/{video} --database {database} --area {area}`
+13. Press Q to exit
 
 ## Features
 - TensorFlow
 - Yolov4
-- AppWrite
+- Realtime Database (Appwrite or Firebase)
 
 ## Screenshot
 ![](/screenshot.png)

@@ -1,6 +1,6 @@
 from absl import app, flags
 from absl.flags import FLAGS
-from core import appwrite_utils
+from core import database_utils
 from core.yolov4 import filter_boxes
 from tensorflow.python.saved_model import tag_constants
 from tensorflow.compat.v1 import ConfigProto
@@ -9,6 +9,12 @@ import time
 import tensorflow as tf
 import cv2
 import numpy as np
+from appwrite.client import Client
+from data.env import Env
+from appwrite.services.databases import Databases
+from firebase_admin import credentials
+from firebase_admin import firestore
+import firebase_admin
 
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
@@ -22,7 +28,8 @@ flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
 flags.DEFINE_string('video', './data/road.mp4', 'path to input video')
 flags.DEFINE_float('iou', 0.45, 'iou threshold')
 flags.DEFINE_float('score', 0.25, 'score threshold')
-flags.DEFINE_string('update', None, 'appwrite collection id')
+flags.DEFINE_string('database', None, 'appwrite or firebase')
+flags.DEFINE_string('area', None, 'parking area')
 
 
 def main(_argv):
@@ -45,8 +52,22 @@ def main(_argv):
         saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
         infer = saved_model_loaded.signatures['serving_default']
 
-    if FLAGS.update:
-        appwrite_utils.init_cache()
+    if FLAGS.database is not None:
+        if FLAGS.database == 'appwrite':
+            client = Client()
+            (client
+             .set_endpoint(Env.endpoint)
+             .set_project(Env.project_id)
+             .set_key(Env.api_key)
+             )
+            database = Databases(client)
+
+        if FLAGS.database == 'firebase':
+            cred = credentials.Certificate('./data/admin_key.json')
+            firebase_admin.initialize_app(cred)
+            database = firestore.client()
+
+        database_utils.init_cache(database)
 
     frame_id = 0
     while True:
@@ -105,9 +126,9 @@ def main(_argv):
 
         frame_id += 1
 
-        if FLAGS.update:
+        if FLAGS.database is not None:
             found_classes = utils.detect_classes(pred_bbox)
-            appwrite_utils.update_database(found_classes)
+            database_utils.update_database(found_classes, database)
 
 
 if __name__ == '__main__':
