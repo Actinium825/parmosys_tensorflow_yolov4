@@ -61,10 +61,8 @@ def update_database(found_classes, database):
                     )
 
             elif FLAGS.database == 'firebase':
-                database.collection(FLAGS.area).document(document_id).set(
-                    {
-                        '$id': document_id,
-                        '$collectionId': FLAGS.area,
-                        attribute_key: is_open,
-                    }
-                )
+                database.collection(FLAGS.area).document(document_id).set({
+                    '$id': document_id,
+                    '$collectionId': FLAGS.area,
+                    attribute_key: is_open,
+                })

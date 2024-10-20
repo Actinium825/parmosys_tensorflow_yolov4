@@ -62,7 +62,7 @@ def main(_argv):
              )
             database = Databases(client)
 
-        if FLAGS.database == 'firebase':
+        elif FLAGS.database == 'firebase':
             cred = credentials.Certificate('./data/admin_key.json')
             firebase_admin.initialize_app(cred)
             database = firestore.client()

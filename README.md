@@ -22,7 +22,7 @@
    ```
    
    </details>
-10. If using Firebase, add `admin_key.json` to `./data/{admin_key.json}`   
+10. If using Firebase, add `admin_key.json` to `./data/{admin_key.json}`
 11. Update `__C.YOLO.CLASSES` directory in `./core/config.py` from step 7
 12. Run `python detectvideo.py --weights ./checkpoints/{weights} --video ./data/{video} --database {database} --area {area}`
 13. Press Q to exit
