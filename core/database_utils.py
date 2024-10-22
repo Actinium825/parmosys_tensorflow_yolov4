@@ -13,7 +13,7 @@ def init_cache(database):
     class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
     for _, value in class_names.items():
-        spot_number = re.findall(r'\d+', value)[0]
+        spot_number = get_spot_number(value)
 
         if cache.get(spot_number) is None:
             cache[spot_number] = True
@@ -37,7 +37,7 @@ def init_cache(database):
 def update_database(found_classes, database):
     for found_class in found_classes:
         is_open = found_class[0] == 'O'
-        spot_number = re.findall(r'\d+', found_class)[0]
+        spot_number = get_spot_number(found_class)
         cached_availability = cache.get(spot_number)
 
         if cached_availability != is_open:
@@ -66,3 +66,13 @@ def update_database(found_classes, database):
                     '$collectionId': FLAGS.area,
                     attribute_key: is_open,
                 })
+
+def get_spot_number(string: str):
+    spot_number = re.findall(r'\d+', string)
+
+    if len(spot_number) == 0:
+        spot_number = 1
+    else:
+        spot_number = spot_number[0]
+
+    return spot_number
