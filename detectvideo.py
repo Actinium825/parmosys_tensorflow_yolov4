@@ -56,7 +56,7 @@ def main(_argv):
         if FLAGS.database == 'appwrite':
             client = Client()
             (client
-             .set_endpoint(Env.endpoint)
+             .set_endpoint('https://cloud.appwrite.io/v1')
              .set_project(Env.project_id)
              .set_key(Env.api_key)
              )
