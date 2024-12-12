@@ -21,7 +21,7 @@
    <summary>Firebase</summary>
    
      1. Generate a private key `admin_key.json` in your Firebase Project settings' Service accounts tab and place in `./data/{admin_key.json}`
-     2. Create Firestore database
+     2. Enable Firestore and create a database
    
    </details>
 9. Update `__C.YOLO.CLASSES` directory in `./core/config.py` from step 7

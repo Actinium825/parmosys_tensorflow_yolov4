@@ -58,9 +58,10 @@ def update_database(found_classes, database):
                         )
 
             elif FLAGS.database == 'firebase':
-                database.collection(FLAGS.area).document(document_id).set({
+                area = FLAGS.area
+                database.collection(area).document(document_id).set({
                     '$id': document_id,
-                    '$collectionId': FLAGS.area,
+                    '$collectionId': area,
                     attribute_key: is_open,
                 })
 
@@ -77,16 +78,17 @@ def get_spot_number(string: str):
 
 
 def create_appwrite_collection(database, document_id, is_open):
+    area = FLAGS.area
     database.create_collection(
         database_id=appwrite_database_id,
-        collection_id=FLAGS.area,
-        name=FLAGS.area,
+        collection_id=area,
+        name=area,
         permissions=["read(\"guests\")"],
     )
 
     database.create_boolean_attribute(
         database_id=appwrite_database_id,
-        collection_id=FLAGS.area,
+        collection_id=area,
         key=attribute_key,
         required=False,
         default=True,
@@ -94,7 +96,7 @@ def create_appwrite_collection(database, document_id, is_open):
 
     database.create_document(
         database_id=appwrite_database_id,
-        collection_id=FLAGS.area,
+        collection_id=area,
         document_id=document_id,
         data={attribute_key: is_open},
     )
