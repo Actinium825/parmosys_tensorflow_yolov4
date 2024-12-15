@@ -21,15 +21,15 @@ if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
-flags.DEFINE_string('weights', './checkpoints/yolov4-416', 'path to weights file')
+flags.DEFINE_string('weights', './checkpoints/22class', 'path to weights file')
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
 flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
-flags.DEFINE_string('video', './data/road.mp4', 'path to input video')
+flags.DEFINE_string('video', './data/test2.wmv', 'path to input video')
 flags.DEFINE_float('iou', 0.45, 'iou threshold')
 flags.DEFINE_float('score', 0.25, 'score threshold')
 flags.DEFINE_string('database', None, 'appwrite or firebase')
-flags.DEFINE_string('area', None, 'parking area')
+flags.DEFINE_string('area', 'chtm', 'parking area')
 
 
 def main(_argv):
