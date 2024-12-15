@@ -5,10 +5,17 @@
 2. Run `python -m venv venv` to create a virtual environment
 3. Restart the IDE and make sure `venv` is indicated on the terminal
 4. Run `pip install -r requirements.txt`
-5. Place your weights folder in `./checkpoints/{weights}`
-6. Place your `.names` file in `./data/classes/{names}`
-7. Place your video for detection in `./data/{video}`
-8. Setup database if uploading realtime data:
+5. Download my weights and video for detection
+   <details>
+   <summary>Link</summary>
+   
+   https://drive.proton.me/urls/ZHDT168A0G#MWuu21jvbTCC
+
+   </details>
+6. Place `22class` weights folder in `./checkpoints/22class`
+7. Place `test2.wmv` video in `./data/test2.wmv`
+8. Skip to Step 10 if running without database
+9. Setup database if uploading realtime data:
    <details>
    <summary>Appwrite</summary>
    
@@ -24,14 +31,18 @@
      2. Enable Firestore and create a database
    
    </details>
-9. Update `__C.YOLO.CLASSES` directory in `./core/config.py` from step 7
-10. Run `python detectvideo.py --weights ./checkpoints/{weights} --video ./data/{video} --database {appwrite or firebase} --area {area}`
-11. Press Q to exit
+10. Run `python detectvideo.py` or `python detectvideo.py --database {appwrite or firebase}` if running with database
+11. To change parking space area, update the `area` flag with other options from [Parmosys Flutter](https://github.com/Actinium825/parmosys_flutter) (snakecase)
+    - `python detectvideo.py --database {appwrite or firebase} --area college_of_law`
+12. Press Q to exit
 
 ## Features
 - TensorFlow
 - Yolov4
 - Realtime Database (Appwrite or Firebase)
+
+## Credits
+- Forked from https://github.com/hunglc007/tensorflow-yolov4-tflite
 
 ## Screenshot
 ![](/screenshot.png)
