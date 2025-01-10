@@ -1,9 +1,14 @@
 # Python App for Project Parmosys (Video Object Detection)
 
+A fork of https://github.com/hunglc007/tensorflow-yolov4-tflite for my thesis project for my 4th year at university to 
+detect available parking spaces and saving the data in a realtime database, either Appwrite or Firebase. This Python App
+works in tandem with Parmosys Flutter Mobile App to display the availability. I removed any unused functions, fixed, and
+updated the rest so that the latest Python and respective packages could always be used.
+
 ## Steps to run
 1. Install latest python version
 2. Run `python -m venv venv` to create a virtual environment
-3. Restart the IDE and make sure `venv` is indicated on the terminal
+3. Restart the terminal and make sure `venv` is indicated on the terminal
 4. Run `pip install -r requirements.txt`
 5. Download my weights and video for detection
    <details>
