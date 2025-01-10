@@ -5,6 +5,12 @@ detect available parking spaces and saving the data in a realtime database, eith
 works in tandem with Parmosys Flutter Mobile App to display the availability. I removed any unused functions, fixed, and
 updated the rest so that the latest Python and respective packages could always be used.
 
+## Contents
+- [Steps to run](#steps-to-run)
+- [Features](#features)
+- [Credits](#credits)
+- [Screenshot](#screenshot)
+
 ## Steps to run
 1. Install latest python version
 2. Run `python -m venv venv` to create a virtual environment
