@@ -12,7 +12,7 @@ updated the rest so that the latest Python and respective packages could always 
 - [Screenshot](#screenshot)
 
 ## Steps to run
-1. Install Python `3.12.8`
+1. Install Python `3.12.11`
 2. Run `python -m venv venv` to create a virtual environment
 3. Restart the terminal and make sure `venv` is indicated on the terminal
 4. Run `pip install -r requirements.txt`
