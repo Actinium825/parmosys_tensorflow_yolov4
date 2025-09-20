@@ -38,7 +38,6 @@ updated the rest so that the latest Python and respective packages could always 
     2. Create an API key with Database scopes enabled and replace `api_key` in `./data/env.py` with your secret key
 
    </details>
-   
    <details>
    <summary>Firebase</summary>
 
