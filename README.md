@@ -31,11 +31,12 @@ updated the rest so that the latest Python and respective packages could always 
 8. Place `test2.wmv` video in `./data/test2.wmv`
 9. Skip to Step 11 if running without database
 10. Setup database if uploading realtime data:
-<details>
-<summary>Appwrite</summary>
 
-11. Create a Project and replace `project_id` in `./data/env.py` with your Project ID
-12. Create an API key with Database scopes enabled and replace `api_key` in `./data/env.py` with your secret key
+   <details>
+   <summary>Appwrite</summary>
+
+1.  Create a Project and replace `project_id` in `./data/env.py` with your Project ID
+2.  Create an API key with Database scopes enabled and replace `api_key` in `./data/env.py` with your secret key
 
    </details>
 
