@@ -35,22 +35,24 @@ updated the rest so that the latest Python and respective packages could always 
    <details>
    <summary>Appwrite</summary>
 
-1.  Create a Project and replace `project_id` in `./data/env.py` with your Project ID
-2.  Create an API key with Database scopes enabled and replace `api_key` in `./data/env.py` with your secret key
+      1.  Create a Project and replace `project_id` in `./data/env.py` with your Project ID
+      2.  Create an API key with Database scopes enabled and replace `api_key` in `./data/env.py` with your secret key
 
    </details>
 
    <details>
    <summary>Firebase</summary>
 
-1.  Generate a private key `admin_key.json` in your Firebase Project settings' Service accounts tab and place in `./data/{admin_key.json}`
-2.  Enable Firestore and create a database
+      1. Generate a private key `admin_key.json` in your Firebase Project settings' Service accounts tab and place in `./data/{admin_key.json}`
+      2. Enable Firestore and create a database
 
    </details>
 
 11. Run `python detectvideo.py` or `python detectvideo.py --database {appwrite or firebase}` if running with database
 12. To change parking space area, update the `area` flag with other options from [Parmosys Flutter](https://github.com/Actinium825/parmosys_flutter) (snakecase)
+
     - `python detectvideo.py --database {appwrite or firebase} --area college_of_law`
+
 13. Press Q to exit
 
 ## Features
